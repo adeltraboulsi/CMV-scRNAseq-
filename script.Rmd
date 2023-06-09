@@ -6,6 +6,95 @@ output: html_notebook
 
 
 ```{r}
+library(Seurat)
+#Load CMV data
+CMV.data1 <- Read10X(data.dir = "I:/Plateformes/Cytometrie/RawData/Sequencing/2020/EXT179_BAUER_Microglie/CELL RANGER/RNA/CMV/filtered_feature_bc_matrix")
+
+CMV <- CreateSeuratObject(counts = CMV.data1, project = "CMV")
+CMV
+#Load MEM data
+MEM.data2 <- Read10X(data.dir = "I:/Plateformes/Cytometrie/RawData/Sequencing/2020/EXT179_BAUER_Microglie/CELL RANGER/RNA/MEM/filtered_feature_bc_matrix")
+
+MEM <- CreateSeuratObject(counts = MEM.data2, project = "MEM")
+MEM
+```
+```{r}
+c.combined <- merge(CMV, y = MEM, add.cell.ids = c("CMV", "MEM"), project = "CMV-MEM-Merged")
+c.combined
+```
+```{r}
+head(colnames(c.combined))
+
+```
+```{r}
+tail(colnames(c.combined))
+```
+```{r}
+unique(sapply(X = strsplit(colnames(c.combined), split = "_"), FUN = "[", 1))
+```
+```{r}
+table(c.combined$orig.ident)
+```
+```{r}
+GetAssayData(c.combined)
+```
+
+
+```{r}
+c.combined[["percent.rnor"]] <- PercentageFeatureSet(c.combined, pattern = "rnor")
+```
+
+```{r}
+VlnPlot(c.combined, features = c( "percent.rnor")) 
+```
+
+
+```{r}
+subset_data <- subset(c.combined, subset = percent.rnor>95)
+VlnPlot(subset_data, features = c( "percent.rnor")) 
+```
+```{r}
+mice_genes <-  grep("mm10",rownames(subset_data))
+#mice_genes
+rat_data <- subset_data[-mice_genes,]
+```
+
+```{r}
+rat_data[["percent.mt"]] <- PercentageFeatureSet(rat_data, pattern = c("-Mt-"))
+# Visualize QC metrics as a violin plot
+VlnPlot(rat_data, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+```
+```{r}
+dim(rat_data)
+```
+
+
+```{r}
+cmv_index <- grep("CMV", colnames(rat_data))
+mem_index<-grep("MEM",colnames(rat_data))
+
+subset_rdata <- merge((subset(rat_data[,cmv_index], subset =  nFeature_RNA > 200 & nFeature_RNA < 5000 & percent.mt < 24)), y=(subset(rat_data[,mem_index], subset =  nFeature_RNA > 200 & nFeature_RNA < 6100 & percent.mt < 25)))
+```
+
+```{r}
+VlnPlot(subset_rdata, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+```
+```{r}
+subset_rdata <- NormalizeData(subset_rdata, normalization.method = "LogNormalize", scale.factor = 10000)
+```
+
+```{r}
+subset_rdata <- ScaleData(subset_rdata, verbose = FALSE)
+```
+
+```{r}
+subset_rdata <- FindVariableFeatures(subset_rdata, 
+                                    selection.method = "vst",
+                                    nfeatures = 2000, 
+                                    verbose = FALSE)
+```
+
+```{r}
 
 ```
 
