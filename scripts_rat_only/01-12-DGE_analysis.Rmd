@@ -1,0 +1,39 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+
+
+```{r}
+# Define a new order for the clusters identity in the factor variable
+new_order <- c("0","1","2","3","4","5","6","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","7_0","7_1","7_2","7_3")
+# Assign the new order to the "sub.clusters" factor variable in the object
+aligned_rat_merged_subcluster$sub.clusters <- factor(x =aligned_rat_merged_subcluster$sub.clusters , levels = new_order)
+```
+
+
+```{r}
+# Find markers in the object with positive average log fold change and filter based on adjusted p-value and using wilcox test
+rat_merged_subcluster_markers <- FindAllMarkers(aligned_rat_merged_subcluster, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+rat_merged_subcluster_markers <- rat_merged_subcluster_markers[rat_merged_subcluster_markers$p_val_adj<0.05,]
+```
+
+
+
+
+```{r}
+# Find all markers in the aligned_rat_merged_subcluster object but using the DESeq2 test
+all_markers <-  FindAllMarkers(aligned_rat_merged_subcluster, min.pct = 0.25, test.use = "DESeq2",  verbose = T)
+# Reverse the average log fold change values for markers in the "MEM_rat" cluster
+all_markers$avg_log2FC[all_markers$cluster=="MEM_rat"]<-(all_markers$avg_log2FC[all_markers$cluster=="MEM_rat"])*-1
+# Filter markers based on adjusted p-value
+all_markers <- all_markers[all_markers$p_val_adj<0.05,]
+```
+
+
+

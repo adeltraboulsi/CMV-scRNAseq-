@@ -1,0 +1,66 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+library(readxl)
+library(stringr)
+library(ggVennDiagram)
+
+# Read an Excel sheet
+list_E17 <- read_excel("C:/Users/atraboulsi/Desktop/excel/3.3.5 Table of differentially expressed genes E17 CMV_vs_MEM_all_samples_run422.xlsx", sheet = "Sheet1")
+list_P1 <-read_excel("C:/Users/atraboulsi/Desktop/excel/3.3.5 Table of differentially expressed genes  P1 CMV_vs_MEM_all_samples.xlsx", sheet = "Sheet1")
+list_rat <-read_excel("C:/Users/atraboulsi/Desktop/excel/markers CMV vs MEM rat DESeq2.xlsx", sheet = "all_markers")
+```
+
+```{r}
+list_genes_E17 <- str_extract(list_E17[[1]][2:nrow(list_E17)], "(?<=\\|).*")
+```
+
+```{r}
+list_genes_P1 <- str_extract(list_P1[[1]][2:nrow(list_P1)], "(?<=\\|).*")
+list_genes_P1<- list_genes_P1[!is.na(list_genes_P1)]
+
+```
+
+
+
+```{r}
+list_of_genes_upregulated <- list_rat[list_rat$avg_log2FC > 0,]
+list_of_gene_upregulated <- list_of_genes_upregulated$gene
+list_of_genes_downregulated <- list_rat[list_rat$avg_log2FC<0,]
+list_of_genes_downregulated <- list_of_genes_downregulated$gene
+list_E17_upregulated <- list_E17[list_E17$...3 >0,]
+list_E17_upregulated <- str_extract(list_E17_upregulated[[1]][2:nrow(list_E17_upregulated)], "(?<=\\|).*")
+list_P1_upregulated <-list_P1[list_P1$...4 >0,]
+list_P1_upregulated <- str_extract(list_P1_upregulated[[1]][2:nrow(list_P1_upregulated)], "(?<=\\|).*")
+list_P1_upregulated<- list_P1_upregulated[!is.na(list_P1_upregulated)]
+list_E17_downregulated <- list_E17[list_E17$...3 <0,]
+list_E17_downregulated <- str_extract(list_E17_downregulated[[1]][2:nrow(list_E17_downregulated)], "(?<=\\|).*")
+list_P1_downregulated <-list_P1[list_P1$...4 <0,]
+list_P1_downregulated <- str_extract(list_P1_downregulated[[1]][1:nrow(list_P1_downregulated)], "(?<=\\|).*")
+list_P1_downregulated<- list_P1_downregulated[!is.na(list_P1_downregulated)]
+```
+
+```{r}
+y<- list(E17=list_E17_upregulated,
+          P1=list_P1_upregulated,
+          rat_data=list_of_gene_upregulated)
+  process_region_data(Venn(y))
+ggVennDiagram(y, show_intersect = TRUE)
+```
+```{r}
+z<- list(E17=list_E17_downregulated,
+          P1=list_P1_downregulated,
+          rat_data=list_of_genes_downregulated)
+  process_region_data(Venn(z))
+ggVennDiagram(z, show_intersect = TRUE)
+```
+
+
+

@@ -1,0 +1,23 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+
+```{r}
+Markers_both7_2_7_2 <- FindMarkers(cluster7_1_7_2, ident.1 = "7_2",   min.pct = 0.25, verbose = FALSE)
+```
+
+```{r}
+EnhancedVolcano(Markers_both7_2_7_2 , 
+                lab = rownames(Markers_both7_2_7_2),
+                x ="avg_log2FC", 
+                y ="p_val",
+                pCutoff = 1e-14,
+                FCcutoff = 0.3,
+                pointSize = 3.0,
+                labSize = 6.0)

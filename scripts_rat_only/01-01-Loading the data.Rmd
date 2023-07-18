@@ -1,0 +1,30 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+## Loading the data assembly mRatBN7.2 for rat genome: 
+
+Exploring Single-Cell RNA-Seq Data: CMV and MEM Analysis Using Seurat, and fitching the necessary libraries for our analysis.
+```{r}
+library(Seurat)
+library(dplyr)
+library(patchwork)
+library(ggplot2)
+library(EnhancedVolcano)
+library(phateR)
+library(EnhancedVolcano)
+library(openxlsx)
+#Load rat_CMV.data 
+rat_CMV.data <-Read10X(data.dir = "S:/Mcyto/Experiments/R&D/2023/George-Alehandro_cmv_rat_alignment/data/CMV/")
+CMV_rat <- CreateSeuratObject(counts = rat_CMV.data , project = "CMV_rat")
+CMV_rat
+#Load #Load rat_CMV.data 
+rat_MEM.data <- Read10X(data.dir = "S:/Mcyto/Experiments/R&D/2023/George-Alehandro_cmv_rat_alignment/data/MEM/")
+MEM_rat <- CreateSeuratObject(counts = rat_MEM.data, project = "MEM_rat")
+MEM_rat
+
+
+
+```
+
+

@@ -1,0 +1,53 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+library(Seurat)
+herve_file <- readRDS("S:/Mcyto/Experiments/R&D/2023/Adel-cmv_scRNAseq/HL_RDS/EXT179.rds")
+
+```
+
+
+
+```{r}
+object_01 <- grep("-1", colnames(herve_file))
+object_1 <- length(object_01)
+object_1 
+
+```
+```{r}
+object_02 <- grep("-2", colnames(herve_file))
+object_2 <- length(object_02)
+object_2
+```
+
+```{r}
+repeat_CMV <- rep("CMV",length(object_02))
+repeat_MEM <- rep("MEM",length(object_01))
+
+Combined_vector <- c(repeat_CMV,repeat_MEM)
+
+```
+
+```{r}
+herve_file$samples<- NULL
+herve_file$samples<- Combined_vector
+
+
+```
+
+```{r}
+DimPlot(herve_file, reduction = "umap", label = T, group.by = "samples")
+```
+
+```{r}
+DimPlot(herve_file, reduction = "umap", label=T , split.by = "samples")
+```
+
+

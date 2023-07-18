@@ -1,0 +1,31 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+## Cell cycle scoring Analysis and Visualization.
+
+
+```{r}
+# Access the contents of the cc.genes.updated.2019 variable
+cc.genes.updated.2019
+```
+
+```{r}
+# Calculate cell cycle scores using the CellCycleScoring function
+# s.features represents the S-phase genes, and g2m.features represents the G2M-phase genes
+# set.ident = TRUE sets the identified cell cycle phases based on the scores
+CellCycleScoring(aligned_rat_merged_subcluster, s.features = cc.genes.updated.2019$s.genes, g2m.features = cc.genes.updated.2019$g2m.genes, set.ident = TRUE) -> data
+```
+
+
+```{r}
+#Access the data obtained form cell cycling score
+data[[]]
+```
+
+
+```{r}
+# Create a umap embedding plot of the data using the DimPlot function representing the G1 and G2M and S
+DimPlot(data, reduction = "umap" )
+```

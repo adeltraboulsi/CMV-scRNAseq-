@@ -1,0 +1,24 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+## PHATE Analysis and visualization of both objects( with and without subclustering of cluster 7)
+
+
+```{r}
+# Perform PHATE dimensionality reduction on the aligned_rat_merged_subcluster object using PCA embeddings
+data_phate <- phate(aligned_rat_merged_subcluster@reductions$pca@cell.embeddings)
+
+## stash the embeddings back into the seurat object as a dimension reduction object
+aligned_rat_merged_subcluster[["PHATE"]] <- CreateDimReducObject(embeddings = data_phate$embedding, key = "PHATE_", assay = DefaultAssay(aligned_rat_merged_subcluster))
+
+# Creat a PHATE embedding plot for the selected clusters
+DimPlot(aligned_rat_merged_subcluster , reduction = "PHATE", label = T) + ggtitle(label = "PHATE")
+```
+```{r}
+#saveRDS(aligned_rat_merged_subcluster, file = "S:/Mcyto/Experiments/R&D/2023/Adel-cmv_scRNAseq/phate-embedding.rds")
+```
+
+
+
+

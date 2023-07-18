@@ -1,0 +1,55 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+#Defining the number of clusters 
+cluster_numbers <- 0:27 
+#Creating a list
+list_of_results <- list()
+
+#Looping over each cluster
+for (cluster_number in cluster_numbers) {
+  
+  # Subset the aligned_rat_merged object based on the current cluster number
+  cluster_nbr <- subset(aligned_rat_merged, idents = cluster_number )
+  
+  # Change the identity to "orig.ident"
+  Idents(cluster_nbr) <- "orig.ident"
+  # Find markers for each cluster split by "orig.ident"
+  markers_ident <-  FindAllMarkers(cluster_nbr, split.by = "orig.ident",min.pct = 0.25, verbose = FALSE)
+  # # Reverse the average log fold change values for markers in the "MEM_rat" cluster
+  markers_ident$avg_log2FC[markers_ident$cluster=="MEM_rat"]<-(markers_ident$avg_log2FC[markers_ident$cluster=="MEM_rat"])*-1
+  # Create an EnhancedVolcano plot for the markers
+  print(EnhancedVolcano(markers_ident , 
+                lab = rownames(markers_ident),
+                x ="avg_log2FC", 
+                y ="p_val",
+                pCutoff = 1e-05,
+                FCcutoff = 0.5,
+                pointSize = 3.0,
+                labSize = 6.0))
+  # Filter markers based on adjusted p-value
+  markers_ident <- markers_ident[markers_ident$p_val_adj<0.05,]
+  # Scale the data in the cluster_nbr object using the identified markers
+  cluster_nbr <- ScaleData(cluster_nbr, features = markers_ident$gene, verbose = F)
+  # Check if there are no markers for the current cluster, and skip to the next cluster if true
+  if (length(markers_ident$gene) == 0) {
+    next
+  }
+    # Create a heatmap using the scaled data and identified markers
+    heatmap<-DoHeatmap(cluster_nbr, features = markers_ident$gene)
+    heatmap_title <- paste("Heatmap for Cluster", cluster_number)
+  
+    heatmap <- heatmap + ggtitle(heatmap_title)
+    print(heatmap)
+  # Store the markers_ident object in the list_of_results using the cluster_number as the key
+  list_of_results[[as.character(cluster_number)]] <- markers_ident 
+ 
+ 
+}

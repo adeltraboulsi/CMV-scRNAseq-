@@ -1,0 +1,22 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+#  Dot Plot of Top 5 Markers for Each Cluster
+```{r}
+# Select the top markers for each cluster
+top_markers <- rat_merged_subcluster_markers %>%
+    group_by(cluster) %>%
+    slice_max(n = 5, order_by = avg_log2FC) 
+```
+
+```{r}
+# Create a dot plot of the selected markers
+top_markers_dotplot<- DotPlot(object = aligned_rat_merged_subcluster, features = unique(top_markers$gene))
+top_markers_dotplot + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 10))
+```

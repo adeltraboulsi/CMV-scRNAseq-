@@ -1,0 +1,24 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+##Data Preparation and Dimensionality Reduction for Exploring Gene Expression in Integrated Rat Dataset.
+ 
+
+```{r}
+#Using the RNA assay for exploring the genes that changes either across clusters, trajectories, or conditions.
+DefaultAssay(aligned_rat_merged ) <- "RNA"
+```
+
+```{r}
+# To ensure that cells can be compared on an equal footing and reduce the impact of technical variability.
+aligned_rat_merged  <- NormalizeData(aligned_rat_merged , verbose = F)
+# To identify the genes that display significant variation across cells using vst method and selecting the top 2000 genes.
+aligned_rat_merged <- FindVariableFeatures(aligned_rat_merged , selection.method = "vst", nfeatures = 2000, verbose = F)
+# To transforms the gene expression values to have similar mean and variance, allowing for meaningful comparisons between cells.
+aligned_rat_merged  <- ScaleData(aligned_rat_merged , verbose = F)
+# To identify a reduced set of components that summarize the major patterns of gene expression variation.(linear dimension reduction)
+aligned_rat_merged  <- RunPCA(aligned_rat_merged , npcs = 50, verbose = F)
+# To preserve the global and local structure of the data in a lower-dimensional space and to provide insights into the structure and relationships between cells within the dataset.(non-linear dimension reduction)
+aligned_rat_merged  <- RunUMAP(aligned_rat_merged , reduction = "pca", dims = 1:50, verbose = F)
+```
