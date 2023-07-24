@@ -5,6 +5,12 @@ output: html_notebook
 ## Loading the data assembly mRatBN7.2 for rat genome: 
 
 Exploring Single-Cell RNA-Seq Data: CMV and MEM Analysis Using Seurat, and fitching the necessary libraries for our analysis.
+
+```{r}
+set.seed(42)
+```
+
+
 ```{r}
 library(Seurat)
 library(dplyr)
