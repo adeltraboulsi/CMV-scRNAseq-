@@ -1,0 +1,82 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+MEM[["percent.rnor"]] <- PercentageFeatureSet(MEM, pattern = "rnor")
+```
+
+```{r}
+p1 <- VlnPlot(MEM, features = c( "percent.rnor"))
+p1
+```
+
+```{r}
+CMV[["percent.rnor"]] <- PercentageFeatureSet(CMV, pattern = "rnor")
+```
+
+```{r}
+p2 <- VlnPlot(CMV, features = c( "percent.rnor"))
+```
+
+```{r}
+p1 + p2
+```
+
+```{r}
+subset_CMV <- subset(CMV, subset = percent.rnor > 95)
+subset_MEM <- subset(MEM, subset = percent.rnor > 95)
+```
+
+```{r}
+P1 <- VlnPlot(subset_CMV, features = c( "percent.rnor"))
+P1
+```
+```{r}
+P2 <- VlnPlot(subset_MEM, features = c( "percent.rnor"))
+P2
+```
+
+```{r}
+P1 + P2
+```
+
+```{r}
+mice_genes_CMV <-  grep("mm10",rownames(subset_CMV))
+rat_data_CMV <- subset_CMV[-mice_genes_CMV,]
+mice_genes_MEM <-  grep("mm10",rownames(subset_MEM))
+rat_data_MEM <- subset_MEM[-mice_genes_MEM,]
+
+```
+
+
+
+```{r}
+rat_data_CMV[["percent.mt"]] <- PercentageFeatureSet(rat_data_CMV, pattern = c("-Mt-"))
+# Visualize QC metrics as a violin plot
+VlnPlot(rat_data_CMV, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+```
+
+
+```{r}
+rat_data_MEM[["percent.mt"]] <- PercentageFeatureSet(rat_data_MEM, pattern = c("-Mt-"))
+# Visualize QC metrics as a violin plot
+VlnPlot(rat_data_MEM, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+```
+
+
+```{r}
+rat_data_CMV <- subset(rat_data_CMV, subset = nFeature_RNA > 200 & nFeature_RNA < 5000 & percent.mt < 10)
+VlnPlot(rat_data_CMV, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+```
+
+
+```{r}
+rat_data_MEM <- subset(rat_data_MEM, subset = nFeature_RNA > 200 & nFeature_RNA < 6000 & percent.mt < 10)
+VlnPlot(rat_data_CMV, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+```
