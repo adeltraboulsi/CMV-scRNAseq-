@@ -4,6 +4,12 @@ output: html_notebook
 ---
 ##Filtering: Selecting CMV and MEM Data Aligned with Rat-Mouse Genome Combination
  
+ 
+```{r}
+rat_merged <- merge(CMV_rat,MEM_rat)
+```
+ 
+ 
 ```{r}
 print("Colnames CMV_rat:")
 head(colnames(CMV_rat))
@@ -14,7 +20,6 @@ head(colnames(rat_merged))
 print("Condition of Object to filter on:")
 head(rat_merged$orig.ident)
 print("tail Colnames Object to filter on:")
-
 tail(colnames(rat_merged))
 print("Condition of Object to filter on:")
 tail(rat_merged$orig.ident)
@@ -24,8 +29,8 @@ tail(rat_merged$orig.ident)
 # Filter CMV_rat and MEM_rat based on seurt_aligned_rat_mouse
 
 # CMV_rat based on -1_1 in seurat_aligned_rat_mouse
-CMV_Filters<- grep("-1_1", colnames(rat_merged), value= T)
-CMV_Filters<- sub("_1","",CMV_Filters)
+CMV_Filters <- grep("-1_1", colnames(rat_merged), value= T)
+CMV_Filters <- sub("_1","",CMV_Filters)
 # MEM_rat based on -1_2 in seurat_aligned_rat_mouse
 MEM_Filters <- grep("-1_2", colnames(rat_merged), value = T)
 MEM_Filters <- sub("_2","",MEM_Filters)
