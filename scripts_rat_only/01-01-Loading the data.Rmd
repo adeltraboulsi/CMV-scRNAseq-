@@ -14,6 +14,7 @@ library(EnhancedVolcano)
 library(phateR)
 library(EnhancedVolcano)
 library(openxlsx)
+library(rtracklayer)
 #Load rat_CMV.data 
 rat_CMV.data <-Read10X(data.dir = "S:/Mcyto/Experiments/R&D/2023/George-Alehandro_cmv_rat_alignment/data/CMV/")
 CMV_rat <- CreateSeuratObject(counts = rat_CMV.data , project = "CMV_rat")
