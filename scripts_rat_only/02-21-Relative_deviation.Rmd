@@ -1,0 +1,60 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+## Barplot for Measuring Relative Deviations
+```{r}
+# Creat a table to represent the number of cells in each clusters for different idents, ("CMV & MEM").
+count_table <- table(aligned_rat_merged_subcluster@meta.data$seurat_clusters, aligned_rat_merged_subcluster@meta.data$orig.ident)
+count_table
+```
+
+```{r}
+#To compute the sum of the total of cells in all cluster at each ident.
+total_CMV <- sum(count_table[, "CMV_rat"])
+total_MEM <- sum(count_table[,"MEM_rat"])
+```
+
+```{r}
+#To compute the occurrence of cells in each cluster of both idents  "CMV"& "MEM" in rat.(ratio = The count of cell at each cluster over the total count of cell in all clusters)
+percent_cmv_each_cluster <- count_table[, "CMV_rat"] / total_CMV * 100
+percent_mem_each_cluster <- count_table[, "MEM_rat"] / total_MEM * 100
+```
+ 
+ 
+```{r}
+x <- (percent_cmv_each_cluster / percent_mem_each_cluster)-1
+
+```
+ 
+```{r}
+#sorting the value in acendin
+sorted_data <- sort(x)
+sorted_data <- sorted_data[-28]
+
+
+# Create the bar plot with cluster indices on the x-axis
+barplot(sorted_data,
+        beside = TRUE,
+        xlab = "Number of Clusters",
+        ylab = "Measuring Relative Deviations",
+        main = "Measuring Relative Deviations",
+        col = "skyblue",              # Change the color of the bars
+        border = "black",             # Add black borders to the bars
+        las = 2,                      # Rotate x-axis labels vertically for better readability
+                  
+)
+abline(v = c(2.5, 29), col = "red", lwd = 2)
+```
+
+
+
+
+
+
+
