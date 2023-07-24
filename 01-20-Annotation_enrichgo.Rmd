@@ -1,0 +1,144 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+##DESeq2 test
+
+```{r}
+# Find all markers in the aligned_rat_merged_subcluster object but using the DESeq2 test
+
+align_rat_merged_subcluster <- SetIdent(object = align_rat_merged_subcluster , value = align_rat_merged_subcluster$orig.ident)
+all_features <-  FindAllMarkers(align_rat_merged_subcluster, min.pct = 0.25, test.use = "DESeq2",  verbose = T)
+
+```
+
+
+
+```{r}
+#Filters gene to upregulated and downregulated 
+genes_upregulated_totest <- all_features[all_features$avg_log2FC > 0.25 & all_features$p_val_adj < 0.05, ] 
+genes_downregulated_totest <-all_features[all_features$avg_log2FC < - 0.25 & all_features$p_val_adj < 0.05, ] 
+```
+
+```{r} 
+# Perform GO enrichment analysis on upregulated genes
+GO_result_upregulated <- enrichGO(gene = genes_upregulated_totest$gene, OrgDb = "org.Rn.eg.db", keyType = "SYMBOL", ont = "BP")
+```
+
+
+```{r}
+# Perform GO enrichment analysis on downregulated genes
+GO_result_downregulated <- enrichGO(gene = genes_downregulated_totest$gene, OrgDb = "org.Rn.eg.db", keyType = "SYMBOL", ont = "BP")
+```
+
+```{r}
+# Convert the GO enrichment results to a data frame for the upregulated genes
+Bp_upregulated_DESeq2 <-as.data.frame(GO_result_upregulated)
+```
+
+```{r}
+# Convert the GO enrichment results to a data frame for the downregulated genes
+Bp_donwregulated_DESeq2 <-as.data.frame(GO_result_downregulated)
+```
+
+```{r}
+# Create the bar plot for the top 20 enriched GO terms in upregulated genes and save it in a directory
+fit1 <- plot(barplot(GO_result_upregulated, showCategory = 20))
+png("C:/Users/atraboulsi/Desktop/bp-upregulated.png", res = 250, width = 3500, height = 3500)
+print(fit1)
+dev.off()
+fit1
+```
+
+```{r}
+# Create the bar plot for the top 20 enriched GO terms in downregulated genes and save it in a directory
+fit2 <- plot(barplot(GO_result_downregulated , showCategory = 20))
+png("C:/Users/atraboulsi/Desktop/bp-upregulated.png", res = 250, width = 3500, height = 3500)
+print(fit2)
+dev.off()
+fit2
+```
+
+
+
+```{r} 
+#Save the GO enrichment results in excel sheet for upregulated
+
+write_xlsx(Bp_upregulated_DESeq2, "C:/Users/atraboulsi/Desktop/excel/bp-upregulated.xlsx")
+```
+
+```{r}
+#Save the GO enrichment results in excel sheet for downregulated
+write_xlsx(Bp_donwregulated_DESeq2, "C:/Users/atraboulsi/Desktop/excel/bp-downregulated.xlsx")
+```
+
+## wilcox test
+```{r}
+# Find all markers in the aligned_rat_merged_subcluster object but using the wilcox test
+align_rat_merged_subcluster <- SetIdent(object = align_rat_merged_subcluster , value = align_rat_merged_subcluster$orig.ident)
+rat_merged_subcluster_markers <- FindAllMarkers(align_rat_merged_subcluster, min.pct = 0.25, logfc.threshold = 0.25)
+rat_merged_subcluster_markers <- rat_merged_subcluster_markers[rat_merged_subcluster_markers$p_val_adj<0.05,]
+```
+
+```{r}
+#Filters gene to upregulated and downregulated 
+genes_upregulated <- rat_merged_subcluster_markers[rat_merged_subcluster_markers$avg_log2FC > 0.25,] 
+genes_downregulated <- rat_merged_subcluster_markers[rat_merged_subcluster_markers$avg_log2FC < - 0.25, ] 
+```
+
+
+```{r}
+# Perform GO enrichment analysis on upregulated genes
+GO_result_upregulated_wilcox <- enrichGO(gene = genes_upregulated$gene , OrgDb = "org.Rn.eg.db", keyType = "SYMBOL", ont = "BP")
+# Perform GO enrichment analysis on downregulated genes
+GO_result_downregulated_wilcox <- enrichGO(gene =genes_downregulated$gene , OrgDb = "org.Rn.eg.db", keyType = "SYMBOL", ont = "BP")
+```
+
+```{r}
+# Convert the GO enrichment results to a data frame for the upregulated gene
+Bp_upregulated_wilcox <-as.data.frame(GO_result_upregulated_wilcox)
+```
+
+```{r}
+# Convert the GO enrichment results to a data frame for the downregulated gene
+Bp_downregulated_wilcox <-as.data.frame(GO_result_downregulated_wilcox)
+```
+
+```{r}
+# Create the bar plot for the top 20 enriched GO terms in upregulated genes and save it in a directory
+fit3 <- plot(barplot(GO_result_upregulated_wilcox, showCategory = 20))
+
+png("C:/Users/atraboulsi/Desktop/bp-upregulated_wilcox.png", res = 250, width = 4000, height = 4000)
+print(fit3)
+dev.off()
+fit3
+```
+
+```{r}
+# Create the bar plot for the top 20 enriched GO terms in downregulated genes and save it in a directory
+fit4 <- plot(barplot(GO_result_downregulated_wilcox, showCategory = 20))
+
+png("C:/Users/atraboulsi/Desktop/bp-downregulated_wilcox.png", res = 250, width = 4000, height = 4000)
+print(fit4)
+dev.off()
+fit4
+```
+
+```{r}
+#Save the GO enrichment results in excel sheet for upregulated
+
+write_xlsx(Bp_upregulated_wilcox, "C:/Users/atraboulsi/Desktop/excel/Bp_upregulated_wilcox.xlsx")
+```
+
+
+```{r}
+#Save the GO enrichment results in excel sheet for downregulated
+
+write_xlsx(Bp_downregulated_wilcox, "C:/Users/atraboulsi/Desktop/excel/Bp_downregulated_wilcox.xlsx")
+```
+

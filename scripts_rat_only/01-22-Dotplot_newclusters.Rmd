@@ -1,0 +1,76 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+
+
+```{r}
+
+# Select the clusters based on the desired identities
+cluster_A <- c("0", "3", "10", "2", "1", "14", "7")
+cluster_B <- c("8", "15", "6", "21")
+cluster_C <- c("9", "4")
+cluster_D <- c("18", "5")
+cluster_E <- c("12", "19")
+cluster_F <- c("11", "26")
+cluster_G <- c("24", "17")
+cluster_H <- c("25", "22", "27")
+
+# List of cluster identifiers
+cluster_identifiers <- c("cluster_A", "cluster_B", "cluster_C", "cluster_D", "cluster_E", "cluster_F", "cluster_G", "cluster_H")
+
+# Create an empty list to store the subsets for each cluster
+subsets_list <- list()
+
+# Create an empty list to store the markers for each cluster
+markers_list <- list()
+aligned_rat_merged_subcluster$grouped_cluster <- as.character(aligned_rat_merged_subcluster$seurat_clusters)
+# Loop through each cluster identifier and subset the object
+for (cluster_id in cluster_identifiers) {
+  aligned_rat_merged_subcluster$grouped_cluster[aligned_rat_merged_subcluster$seurat_clusters %in% get(cluster_id)] <- cluster_id
+
+}
+
+aligned_rat_merged_subcluster$grouped_cluster <- as.factor(aligned_rat_merged_subcluster$grouped_cluster)
+
+```
+
+```{r}
+aligned_rat_merged_subcluster <- SetIdent(object = aligned_rat_merged_subcluster , value = aligned_rat_merged_subcluster$grouped_cluster)
+DimPlot(aligned_rat_merged_subcluster , reduction = "umap", label = T)
+```
+
+
+```{r}
+markers_clusters <-  FindAllMarkers(aligned_rat_merged_subcluster, min.pct = 0.25,logfc.threshold = 0.25,  verbose = T)
+
+
+```
+
+ 
+```{r}
+# Select the top markers for each cluster
+top_markers <- markers_clusters %>%
+    group_by(cluster) %>%
+    slice_max(n = 5, order_by = avg_log2FC) 
+```
+
+
+```{r}
+# Create a dot plot of the selected markers
+top_markers_dotplot<- DotPlot(object = aligned_rat_merged_subcluster, features = unique(top_markers$gene))
+top_markers_dotplot + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 10))
+```
+```{r}
+jpeg(file="saving_plot1.jpeg")
+
+dev.off()
+```
+
+
+
