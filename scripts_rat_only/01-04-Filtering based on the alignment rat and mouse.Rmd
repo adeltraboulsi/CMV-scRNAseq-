@@ -4,11 +4,7 @@ output: html_notebook
 ---
 ##Filtering: Selecting CMV and MEM Data Aligned with Rat-Mouse Genome Combination
  
- 
-```{r}
-rat_merged <- merge(CMV_rat,MEM_rat)
-```
- 
+# rat merged 
  
 ```{r}
 print("Colnames CMV_rat:")
