@@ -1,0 +1,37 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+##Data Integration: Normalization, Feature Selection, and Finding anchors(merging) of CMV and MEM Seurat Objects in Rat Analysis
+
+
+
+```{r}
+# Create an empty list to store the Seurat objects
+object_list <- list()
+
+# Add the CMV and MEM Seurat objects to the list
+object_list[["CMV"]] <- seurat_aligned_rat_CMV
+object_list[["MEM"]] <- seurat_aligned_rat_MEM
+
+# Loop through the list and perform normalization and feature selection for each object
+for (i in 1:length(object_list)) {
+  # Normalize the data for each object
+  object_list[[i]] <- NormalizeData(object_list[[i]], verbose = FALSE)
+  
+  # Perform variable feature selection using the vst method and select top 2000 features
+  object_list[[i]] <- FindVariableFeatures(object_list[[i]], selection.method = "vst", nfeatures = 2000, verbose = FALSE)
+}
+
+```
+
+
+```{r}
+# Find integration anchors to align the datasets represented by the aligned_rat_anchors in the object_list.
+aligned_rat_anchors <- FindIntegrationAnchors(object.list = object_list, dims = 1:27)
+```
+
+```{r}
+# Aligning and combining the data from seurat_aligned_rat_CMV and seurat aligned_rat_MEM, resulting in a merged and integrated Seurat object (aligned_rat_merged). This merged object can then be used for downstream analysis, including visualization, clustering, differential expression analysis etc...
+aligned_rat_merged <- IntegrateData(anchorset = aligned_rat_anchors, dims = 1:27)
+```

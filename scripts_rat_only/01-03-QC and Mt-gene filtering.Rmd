@@ -1,0 +1,40 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+##Quality Control (QC) and Mitochondrial Gene Filtering in Single-Cell RNA-Seq Analysis: Comparing Infected and Non-Infected Rat Samplesq
+ 
+
+```{r}
+# Calculate the percentage of mitochondrial genes in each cell for the infected rat
+CMV_rat[["percent.mt"]] <- PercentageFeatureSet(CMV_rat, features = unique(mt_gtf_genes))
+
+# Visualize QC metrics as a violin plot
+VlnPlot(CMV_rat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+```
+
+
+```{r}
+# Filter the CMV_rat object based on specified criteria
+CMV_rat <- subset(CMV_rat, subset = nFeature_RNA > 200 & nFeature_RNA < 7500 & percent.mt < 7.5)
+
+# Visualize QC metrics as a violin plot
+VlnPlot(CMV_rat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+```
+
+
+```{r}
+# Calculate the percentage of mitochondrial genes in each cell of the non infected rat
+MEM_rat[["percent.mt"]] <- PercentageFeatureSet(MEM_rat, features = unique(mt_gtf_genes))
+
+# Visualize QC metrics as a violin plot
+VlnPlot(MEM_rat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+```
+
+```{r}
+# filter the MEM_rat object based on specified criteria
+MEM_rat <- subset(MEM_rat , subset = nFeature_RNA > 200 & nFeature_RNA < 8000 & percent.mt < 7.5)
+# Visualize QC metrics as a violin plot
+VlnPlot(MEM_rat , features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+```
+
