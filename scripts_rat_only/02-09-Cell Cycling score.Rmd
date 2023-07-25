@@ -15,7 +15,7 @@ cc.genes.updated.2019
 # Calculate cell cycle scores using the CellCycleScoring function
 # s.features represents the S-phase genes, and g2m.features represents the G2M-phase genes
 # set.ident = TRUE sets the identified cell cycle phases based on the scores
-CellCycleScoring(aligned_rat_merged_subcluster, s.features = cc.genes.updated.2019$s.genes, g2m.features = cc.genes.updated.2019$g2m.genes, set.ident = TRUE) -> data
+CellCycleScoring(aligned_rat_merged, s.features = cc.genes.updated.2019$s.genes, g2m.features = cc.genes.updated.2019$g2m.genes, set.ident = TRUE) -> data
 ```
 
 

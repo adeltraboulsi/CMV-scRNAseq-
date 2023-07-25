@@ -8,12 +8,12 @@ output: html_notebook
 #Always using the RNA assay
 DefaultAssay(aligned_rat_merged) <- "RNA"
 #To create sub-clusters of the cluster 7 and adding a new column sub.clusters that contains the new Idents.
-aligned_rat_merged_subcluster<-FindSubCluster(aligned_rat_merged, "7", graph.name = "RNA_snn",  subcluster.name = "sub.clusters",  resolution = 0.35, algorithm = 1)
+aligned_rat_merged<-FindSubCluster(aligned_rat_merged, "7", graph.name = "RNA_snn",  subcluster.name = "sub.clusters",  resolution = 0.35, algorithm = 1)
 ```
 
 ```{r} 
 #To visualize the new sub-clusters withing "CMV" & "MEM" in rat.
-DimPlot(aligned_rat_merged_subcluster, group.by = "sub.clusters", split.by = "orig.ident" ,label = T)
+DimPlot(aligned_rat_merged, group.by = "sub.clusters", split.by = "orig.ident" ,label = T)
 ```
 
 ```{r}

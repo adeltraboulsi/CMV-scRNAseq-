@@ -10,7 +10,7 @@ Try executing this chunk by clicking the *Run* button within the chunk or by pla
 
 ```{r}
 # Creat a table to represent the number of cells in each clusters for different idents, ("CMV & MEM").
-count_table <- table(aligned_rat_merged_subcluster@meta.data$sub.clusters, aligned_rat_merged@meta.data$orig.ident)
+count_table <- table(aligned_rat_merged@meta.data$sub.clusters, aligned_rat_merged@meta.data$orig.ident)
 count_table
 ```
 

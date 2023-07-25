@@ -8,7 +8,7 @@ output: html_notebook
 # Select the clusters based on the desire identities
 clusters_toPLot <- c("0","1","2","3","4","6","7","8","9","10","14","15")
 # Subset the aligned_rat_merged_subcluster object to include only the selected clusters
-new_clustertoPLot <- subset(aligned_rat_merged_subcluster, idents =  clusters_toPLot)
+new_clustertoPLot <- subset(aligned_rat_merged, idents =  clusters_toPLot)
 # Normalize the data in the new_clustertoPlot object
 new_clustertoPLot <- NormalizeData(new_clustertoPLot, verbose = F)
 # Scale the data in the new_clustertoPlot object
@@ -42,7 +42,7 @@ color_Palette <- c(
 #Sort the clusters in the following order
 new_order <- c("0","1","2","3","4","6","7","8","9","10","14","15")
 # Assign the new order to the "seurat_clusters" factor variable in the new_clustertoPLot object
-new_clustertoPLot$seurat_clusters <- factor(x = Idents(aligned_rat_merged_subcluster), levels = new_order)
+new_clustertoPLot$seurat_clusters <- factor(x = Idents(aligned_rat_merged), levels = new_order)
 # Plot with cluster labels and specific color palette
 DimPlot(new_clustertoPLot, reduction = "umap", label = T) +
   scale_color_manual(values = color_Palette,  guide = FALSE) +
@@ -52,7 +52,7 @@ DimPlot(new_clustertoPLot, reduction = "umap", label = T) +
 
 
 ```{r}
-aligned_rat_merged_subcluster <- SetIdent(aligned_rat_merged_subcluster, value = aligned_rat_merged_subcluster$sub.clusters)
+aligned_rat_merged <- SetIdent(aligned_rat_merged, value = aligned_rat_merged_subcluster$sub.clusters)
 # Define a named vector with cluster-color mappings
 color_Palette2 <- c(
   "0" <- "#FF8080",    # Medium-light red
@@ -74,7 +74,7 @@ color_Palette2 <- c(
 #Sort the clusters in the following order
 new_order <- c("0","1","2","3","4","5","6","8","9","10","11","12","13","14","15","7_0","7_1","7_2","7_3")
 # Assign the new order to the "seurat_clusters" factor variable in the new_clustertoPLot object
-new_clustertoPLot$sub.clusters <- factor(x = Idents(aligned_rat_merged_subcluster), levels = new_order)
+new_clustertoPLot$sub.clusters <- factor(x = Idents(aligned_rat_merged), levels = new_order)
 # Plot with cluster labels and specific color palette
 DimPlot(new_clustertoPLot, reduction = "umap", group.by = "sub.clusters", label = T) + 
   scale_color_manual(values = color_Palette2, guide = FALSE) +

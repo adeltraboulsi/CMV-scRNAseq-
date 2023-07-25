@@ -8,10 +8,10 @@ This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute
 Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
 
 ```{r}
-aligned_rat_merged_subcluster<-SetIdent(aligned_rat_merged_subcluster, value = aligned_rat_merged_subcluster$sub.clusters)
+aligned_rat_merged<-SetIdent(aligned_rat_merged, value = aligned_rat_merged$sub.clusters)
 cluster_numbers = c("7_2","7_1")
 
-cluster7_1_7_2 <- subset(aligned_rat_merged_subcluster , idents = cluster_numbers)
+cluster7_1_7_2 <- subset(aligned_rat_merged , idents = cluster_numbers)
 Markers_7_1_7_2 <- FindMarkers(cluster7_1_7_2, ident.1 = "7_2",   min.pct = 0.25, verbose = FALSE)
 Markers_7_1_7_2 <- Markers_7_1_7_2[Markers_7_1_7_2$p_val_adj<0.05,]
 Markers_7_1_7_2<-Markers_7_1_7_2[order(Markers_7_1_7_2$avg_log2FC),]

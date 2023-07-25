@@ -7,13 +7,27 @@ output: html_notebook
 # rat merged 
  
 ```{r}
+# if not loaded rat_merged
+
+# rat_merged <- readRDS("rat_merged_from_first_directory.RDS")
+```
+ 
+```{r}
+setwd("C:/Users/gsaad/Documents/GitHub/CMV-scRNAseq-")
 print("Colnames CMV_rat:")
 head(colnames(CMV_rat))
 print("Colnames MEM_rat:")
 head(colnames(MEM_rat))
+
+if (!exists("rat_merged")){
+  print(getwd())
+  rat_merged <- readRDS("rat_merged_from_first_directory.RDS")
+}
+
 print("head colnames Object to filter on:")
 head(colnames(rat_merged))
 print("Condition of Object to filter on:")
+
 head(rat_merged$orig.ident)
 print("tail Colnames Object to filter on:")
 tail(colnames(rat_merged))
