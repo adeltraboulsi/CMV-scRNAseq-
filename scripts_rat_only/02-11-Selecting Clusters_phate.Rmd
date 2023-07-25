@@ -2,7 +2,7 @@
 title: "R Notebook"
 output: html_notebook
 ---
-##Selecting Clusters for PCA, UMAP and PHATE Embedding
+##Selecting Clusters for PCA, UMAP and PHATE Embeddingq
  
 ```{r}
 # Select the clusters based on the desire identities
@@ -52,7 +52,7 @@ DimPlot(new_clustertoPLot, reduction = "umap", label = T) +
 
 
 ```{r}
-aligned_rat_merged <- SetIdent(aligned_rat_merged, value = aligned_rat_merged_subcluster$sub.clusters)
+aligned_rat_merged <- SetIdent(aligned_rat_merged, value = aligned_rat_merged$sub.clusters)
 # Define a named vector with cluster-color mappings
 color_Palette2 <- c(
   "0" <- "#FF8080",    # Medium-light red
