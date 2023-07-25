@@ -52,6 +52,7 @@ DimPlot(new_clustertoPLot, reduction = "umap", label = T) +
 
 
 ```{r}
+aligned_rat_merged_subcluster <- SetIdent(aligned_rat_merged_subcluster, value = aligned_rat_merged_subcluster$sub.clusters)
 # Define a named vector with cluster-color mappings
 color_Palette2 <- c(
   "0" <- "#FF8080",    # Medium-light red
