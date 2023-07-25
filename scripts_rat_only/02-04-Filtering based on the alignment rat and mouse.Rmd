@@ -13,16 +13,14 @@ output: html_notebook
 ```
  
 ```{r}
-setwd("C:/Users/gsaad/Documents/GitHub/CMV-scRNAseq-")
 print("Colnames CMV_rat:")
 head(colnames(CMV_rat))
 print("Colnames MEM_rat:")
 head(colnames(MEM_rat))
 
-if (!exists("rat_merged")){
-  print(getwd())
-  rat_merged <- readRDS("rat_merged_from_first_directory.RDS")
-}
+# if (!exists("rat_merged")){
+#   rat_merged <- readRDS("rat_merged_from_first_directory.RDS")
+# }
 
 print("head colnames Object to filter on:")
 head(colnames(rat_merged))
