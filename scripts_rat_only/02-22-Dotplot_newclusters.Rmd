@@ -29,25 +29,25 @@ subsets_list <- list()
 
 # Create an empty list to store the markers for each cluster
 markers_list <- list()
-aligned_rat_merged_subcluster$grouped_cluster <- as.character(aligned_rat_merged_subcluster$seurat_clusters)
+aligned_rat_merged$grouped_cluster <- as.character(aligned_rat_mergedr$seurat_clusters)
 # Loop through each cluster identifier and subset the object
 for (cluster_id in cluster_identifiers) {
-  aligned_rat_merged_subcluster$grouped_cluster[aligned_rat_merged_subcluster$seurat_clusters %in% get(cluster_id)] <- cluster_id
+  aligned_rat_merged$grouped_cluster[aligned_rat_merged$seurat_clusters %in% get(cluster_id)] <- cluster_id
 
 }
 
-aligned_rat_merged_subcluster$grouped_cluster <- as.factor(aligned_rat_merged_subcluster$grouped_cluster)
+aligned_rat_merged$grouped_cluster <- as.factor(aligned_rat_merged$grouped_cluster)
 
 ```
 
 ```{r}
-aligned_rat_merged_subcluster <- SetIdent(object = aligned_rat_merged_subcluster , value = aligned_rat_merged_subcluster$grouped_cluster)
-DimPlot(aligned_rat_merged_subcluster , reduction = "umap", label = T)
+aligned_rat_merged <- SetIdent(object = aligned_rat_merged , value = aligned_rat_merged$grouped_cluster)
+DimPlot(aligned_rat_merged , reduction = "umap", label = T)
 ```
 
 
 ```{r}
-markers_clusters <-  FindAllMarkers(aligned_rat_merged_subcluster, min.pct = 0.25,logfc.threshold = 0.25,  verbose = T)
+markers_clusters <-  FindAllMarkers(aligned_rat_merged, min.pct = 0.25,logfc.threshold = 0.25,  verbose = T)
 
 
 ```
@@ -63,7 +63,7 @@ top_markers <- markers_clusters %>%
 
 ```{r}
 # Create a dot plot of the selected markers
-top_markers_dotplot<- DotPlot(object = aligned_rat_merged_subcluster, features = unique(top_markers$gene))
+top_markers_dotplot<- DotPlot(object = aligned_rat_merged, features = unique(top_markers$gene))
 top_markers_dotplot + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 10))
 ```
 ```{r}

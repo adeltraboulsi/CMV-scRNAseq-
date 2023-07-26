@@ -12,8 +12,8 @@ Try executing this chunk by clicking the *Run* button within the chunk or by pla
 ```{r}
 # Find all markers in the aligned_rat_merged_subcluster object but using the DESeq2 test
 
-align_rat_merged_subcluster <- SetIdent(object = align_rat_merged_subcluster , value = align_rat_merged_subcluster$orig.ident)
-all_features <-  FindAllMarkers(align_rat_merged_subcluster, min.pct = 0.25, test.use = "DESeq2",  verbose = T)
+aligned_rat_merged <- SetIdent(object = aligned_rat_merged , value = aligned_rat_merged$orig.ident)
+all_features <-  FindAllMarkers(aligned_rat_merged, min.pct = 0.25, test.use = "DESeq2",  verbose = T)
 
 ```
 
@@ -80,8 +80,7 @@ write_xlsx(Bp_donwregulated_DESeq2, "C:/Users/atraboulsi/Desktop/excel/bp-downre
 ## wilcox test
 ```{r}
 # Find all markers in the aligned_rat_merged_subcluster object but using the wilcox test
-align_rat_merged_subcluster <- SetIdent(object = align_rat_merged_subcluster , value = align_rat_merged_subcluster$orig.ident)
-rat_merged_subcluster_markers <- FindAllMarkers(align_rat_merged_subcluster, min.pct = 0.25, logfc.threshold = 0.25)
+rat_merged_subcluster_markers <- FindAllMarkers(aligned_rat_merged, min.pct = 0.25, logfc.threshold = 0.25)
 rat_merged_subcluster_markers <- rat_merged_subcluster_markers[rat_merged_subcluster_markers$p_val_adj<0.05,]
 ```
 

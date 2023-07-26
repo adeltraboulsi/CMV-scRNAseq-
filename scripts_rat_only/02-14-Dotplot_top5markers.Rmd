@@ -13,6 +13,6 @@ top_markers <- rat_merged_subcluster_markers %>%
 
 ```{r}
 # Create a dot plot of the selected markers
-top_markers_dotplot<- DotPlot(object = aligned_rat_merged_subcluster, features = unique(top_markers$gene))
+top_markers_dotplot<- DotPlot(object = aligned_rat_merged, features = unique(top_markers$gene))
 top_markers_dotplot + theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 10))
 ```
