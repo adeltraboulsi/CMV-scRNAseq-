@@ -7,7 +7,7 @@ output: html_notebook
 ```{r}
 # Select the clusters based on the desire identities
 clusters_toPLot <- c("0","1","2","3","4","6","7","8","9","10","14","15")
-# Subset the aligned_rat_merged_subcluster object to include only the selected clusters
+# Subset the aligned_rat_merged object to include only the selected clusters
 new_clustertoPLot <- subset(aligned_rat_merged, idents =  clusters_toPLot)
 # Normalize the data in the new_clustertoPlot object
 new_clustertoPLot <- NormalizeData(new_clustertoPLot, verbose = F)

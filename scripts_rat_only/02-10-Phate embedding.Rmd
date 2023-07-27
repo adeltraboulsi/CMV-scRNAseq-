@@ -6,7 +6,7 @@ output: html_notebook
 
 
 ```{r}
-# Perform PHATE dimensionality reduction on the aligned_rat_merged_subcluster object using PCA embeddings
+# Perform PHATE dimensionality reduction on the aligned_rat_merged object using PCA embeddings
 data_phate <- phate(aligned_rat_merged@reductions$pca@cell.embeddings)
 
 ## stash the embeddings back into the seurat object as a dimension reduction object

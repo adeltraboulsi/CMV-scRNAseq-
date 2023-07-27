@@ -6,7 +6,7 @@ output: html_notebook
  
 
 ```{r}
-# Find markers specific to cluster "7_0" in the aligned_rat_merged_subcluster object
+# Find markers specific to cluster "7_0" in the aligned_rat_merged object
 cluster7_0.markers <- FindMarkers(aligned_rat_merged , ident.1 =   "7_0", logfc.threshold = 0.25, min.pct = 0.25)
 # Filter the markers based on adjusted p-value (p_val_adj)
 cluster7_0.markers <- cluster7_0.markers[cluster7_0.markers$p_val_adj<0.05,]
@@ -18,7 +18,7 @@ cluster_7_0.markers.only_negative <- cluster7_0.markers[cluster7_0.markers$avg_l
 ```
 
 ```{r}
-# Find markers specific to cluster "7_1" in the aligned_rat_merged_subcluster object
+# Find markers specific to cluster "7_1" in the aligned_rat_merged object
 cluster7_1.markers <- FindMarkers(aligned_rat_mergedr , ident.1 =   "7_1", logfc.threshold = 0.25, min.pct = 0.25)
 # Filter the markers based on adjusted p-value (p_val_adj)
 cluster7_1.markers <- cluster7_1.markers[cluster7_1.markers$p_val_adj<0.05,]
@@ -30,7 +30,7 @@ cluster_7_1.markers.only_negative <- cluster7_1.markers[cluster7_1.markers$avg_l
 ```
 
 ```{r}
-# Find markers specific to cluster "7_2" in the aligned_rat_merged_subcluster object
+# Find markers specific to cluster "7_2" in the aligned_rat_merged object
 cluster7_2.markers <- FindMarkers(aligned_rat_merged , ident.1 =   "7_2", logfc.threshold = 0.25, min.pct = 0.25)
 # Filter the markers based on adjusted p-value (p_val_adj
 cluster7_2.markers <- cluster7_2.markers[cluster7_2.markers$p_val_adj<0.05,]
@@ -42,7 +42,7 @@ cluster_7_2.markers.only_negative <- cluster7_2.markers[cluster7_2.markers$avg_l
 ```
 
 ```{r}
-# Find markers specific to cluster "7_3" in the aligned_rat_merged_subcluster object
+# Find markers specific to cluster "7_3" in the aligned_rat_merged object
 cluster7_3.markers <- FindMarkers(aligned_rat_merged , ident.1 =   "7_3", logfc.threshold = 0.25, min.pct = 0.25)
 # Filter the markers based on adjusted p-value (p_val_adj
 cluster7_3.markers <- cluster7_3.markers[cluster7_3.markers$p_val_adj<0.05,]

@@ -8,7 +8,7 @@ This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute
 Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
 
 
-
+## Dotplot for the top 5 markers in each cluster  vs all
 ```{r}
 
 # Select the clusters based on the desired identities

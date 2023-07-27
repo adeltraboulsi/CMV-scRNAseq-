@@ -7,6 +7,8 @@ This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute
 
 Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
 
+
+## Heatmap for both clusters 7_1 and 7_1
 ```{r}
 aligned_rat_merged<-SetIdent(aligned_rat_merged, value = aligned_rat_merged$sub.clusters)
 cluster_numbers = c("7_2","7_1")
