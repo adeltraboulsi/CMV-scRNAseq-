@@ -19,7 +19,7 @@ cluster_7_0.markers.only_negative <- cluster7_0.markers[cluster7_0.markers$avg_l
 
 ```{r}
 # Find markers specific to cluster "7_1" in the aligned_rat_merged object
-cluster7_1.markers <- FindMarkers(aligned_rat_mergedr , ident.1 =   "7_1", logfc.threshold = 0.25, min.pct = 0.25)
+cluster7_1.markers <- FindMarkers(aligned_rat_merged , ident.1 =   "7_1", logfc.threshold = 0.25, min.pct = 0.25)
 # Filter the markers based on adjusted p-value (p_val_adj)
 cluster7_1.markers <- cluster7_1.markers[cluster7_1.markers$p_val_adj<0.05,]
 # Filter the markers to include only positive average log fold change (avg_log2FC)
