@@ -3,10 +3,9 @@ title: "R Notebook"
 output: html_notebook
 ---
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
-
-Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
-
+```{r}
+library(clusterProfiler)
+```
 ##DESeq2 test
 
 ```{r}
@@ -24,6 +23,7 @@ all_features <-  FindAllMarkers(aligned_rat_merged, min.pct = 0.25, test.use = "
 genes_upregulated_totest <- all_features[all_features$avg_log2FC > 0.25 & all_features$p_val_adj < 0.05, ] 
 genes_downregulated_totest <-all_features[all_features$avg_log2FC < - 0.25 & all_features$p_val_adj < 0.05, ] 
 ```
+
 
 ```{r} 
 # Perform GO enrichment analysis on upregulated genes
@@ -49,7 +49,7 @@ Bp_donwregulated_DESeq2 <-as.data.frame(GO_result_downregulated)
 ```{r}
 # Create the bar plot for the top 20 enriched GO terms in upregulated genes and save it in a directory
 fit1 <- plot(barplot(GO_result_upregulated, showCategory = 20))
-png("C:/Users/atraboulsi/Desktop/bp-upregulated.png", res = 250, width = 3500, height = 3500)
+#png("C:/Users/atraboulsi/Desktop/bp-upregulated.png", res = 250, width = 3500, height = 3500)
 print(fit1)
 dev.off()
 fit1
@@ -58,7 +58,7 @@ fit1
 ```{r}
 # Create the bar plot for the top 20 enriched GO terms in downregulated genes and save it in a directory
 fit2 <- plot(barplot(GO_result_downregulated , showCategory = 20))
-png("C:/Users/atraboulsi/Desktop/bp-upregulated.png", res = 250, width = 3500, height = 3500)
+#png("C:/Users/atraboulsi/Desktop/bp-upregulated.png", res = 250, width = 3500, height = 3500)
 print(fit2)
 dev.off()
 fit2
@@ -69,12 +69,12 @@ fit2
 ```{r} 
 #Save the GO enrichment results in excel sheet for upregulated
 
-write_xlsx(Bp_upregulated_DESeq2, "C:/Users/atraboulsi/Desktop/excel/bp-upregulated.xlsx")
+#write_xlsx(Bp_upregulated_DESeq2, "C:/Users/atraboulsi/Desktop/excel/bp-upregulated.xlsx")
 ```
 
 ```{r}
 #Save the GO enrichment results in excel sheet for downregulated
-write_xlsx(Bp_donwregulated_DESeq2, "C:/Users/atraboulsi/Desktop/excel/bp-downregulated.xlsx")
+#write_xlsx(Bp_donwregulated_DESeq2, "C:/Users/atraboulsi/Desktop/excel/bp-downregulated.xlsx")
 ```
 
 ## wilcox test
@@ -112,7 +112,7 @@ Bp_downregulated_wilcox <-as.data.frame(GO_result_downregulated_wilcox)
 # Create the bar plot for the top 20 enriched GO terms in upregulated genes and save it in a directory
 fit3 <- plot(barplot(GO_result_upregulated_wilcox, showCategory = 20))
 
-png("C:/Users/atraboulsi/Desktop/bp-upregulated_wilcox.png", res = 250, width = 4000, height = 4000)
+#png("C:/Users/atraboulsi/Desktop/bp-upregulated_wilcox.png", res = 250, width = 4000, height = 4000)
 print(fit3)
 dev.off()
 fit3
@@ -122,7 +122,7 @@ fit3
 # Create the bar plot for the top 20 enriched GO terms in downregulated genes and save it in a directory
 fit4 <- plot(barplot(GO_result_downregulated_wilcox, showCategory = 20))
 
-png("C:/Users/atraboulsi/Desktop/bp-downregulated_wilcox.png", res = 250, width = 4000, height = 4000)
+#png("C:/Users/atraboulsi/Desktop/bp-downregulated_wilcox.png", res = 250, width = 4000, height = 4000)
 print(fit4)
 dev.off()
 fit4
@@ -131,13 +131,13 @@ fit4
 ```{r}
 #Save the GO enrichment results in excel sheet for upregulated
 
-write_xlsx(Bp_upregulated_wilcox, "C:/Users/atraboulsi/Desktop/excel/Bp_upregulated_wilcox.xlsx")
+#write_xlsx(Bp_upregulated_wilcox, "C:/Users/atraboulsi/Desktop/excel/Bp_upregulated_wilcox.xlsx")
 ```
 
 
 ```{r}
 #Save the GO enrichment results in excel sheet for downregulated
 
-write_xlsx(Bp_downregulated_wilcox, "C:/Users/atraboulsi/Desktop/excel/Bp_downregulated_wilcox.xlsx")
+#write_xlsx(Bp_downregulated_wilcox, "C:/Users/atraboulsi/Desktop/excel/Bp_downregulated_wilcox.xlsx")
 ```
 
