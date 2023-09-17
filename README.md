@@ -39,7 +39,7 @@ To get started with scRNA-seq analysis, follow these steps:
 1. Clone this repository to your local machine.
    
    ```bash
-   git clone https://github.com/adeltraboulsi/CMV-scRNAseq.git## Usage
+   git clone https://github.com/adeltraboulsi/CMV-scRNAseq.git
 
 To perform the analysis, follow these steps:
 
