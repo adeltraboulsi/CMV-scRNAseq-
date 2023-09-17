@@ -9,7 +9,7 @@ The scRNA-seq Analysis Toolkit is a powerful resource for analyzing Single Cell 
 - [Introduction](#introduction)
 - [Key Analysis Steps](#key-analysis-steps)
 - [Getting Started](#getting-started)
-- [Usage](#usage)
+
 
 
 ## Introduction
